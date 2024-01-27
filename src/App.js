@@ -1,5 +1,6 @@
 import Directory from "./components/directory/directory.components";
 
+// Shop items
 const catagories = [
   {
     id: 1,

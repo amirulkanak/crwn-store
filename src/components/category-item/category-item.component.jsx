@@ -1,5 +1,6 @@
 import "./category-item.styles.scss";
 
+// Items Card
 const CategoryItem = ({ category }) => {
   const { title, imageUrl } = category;
   return (
