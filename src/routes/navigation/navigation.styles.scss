@@ -1,0 +1,28 @@
+.navigation {
+  height: 4.375rem;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.57rem;
+
+  .logo-container {
+    height: max-content;
+    width: max-content;
+    margin-left: 1rem;
+    margin-top: 1rem;
+  }
+
+  .nav-links-container {
+    width: 50%;
+    height: 100%;
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-end;
+
+    .nav-link {
+      font-size: 1.375rem;
+      padding: 0.125rem 0.4rem;
+    }
+  }
+}
