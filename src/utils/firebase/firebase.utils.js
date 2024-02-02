@@ -3,14 +3,15 @@ import { initializeApp } from "firebase/app";
 // Authentication methods
 import {
   getAuth,
-  signInWithRedirect,
   signInWithPopup,
   GoogleAuthProvider,
+  createUserWithEmailAndPassword,
 } from "firebase/auth";
 
 // Database methods
 import { getFirestore, doc, getDoc, setDoc } from "firebase/firestore";
 
+// config data from firebase
 const firebaseConfig = {
   apiKey: "AIzaSyAGSzT6UR0xN3z7Fec3RlETWOnr3_iD4Fo",
   authDomain: "crwn-store-db-334b9.firebaseapp.com",
@@ -31,6 +32,8 @@ googleProvider.setCustomParameters({
 });
 
 export const auth = getAuth();
+
+// Google Authentication
 export const signInWithGooglePopup = () =>
   signInWithPopup(auth, googleProvider);
 
@@ -38,13 +41,19 @@ export const signInWithGooglePopup = () =>
 export const db = getFirestore();
 
 // creating user document with uid
-export const createUserDocumentFromAuth = async (userAuth) => {
+export const createUserDocumentFromAuth = async (
+  userAuth,
+  additionalInformation = {}
+) => {
+  // if don't get userAuth then return
+  if (!userAuth) return;
+
   const userDocRef = doc(db, "users", userAuth.uid);
 
   // getting user document
   const userSnapshot = await getDoc(userDocRef);
 
-  // checking user data exists or not,if not creating user data
+  // checking user data exists or not,if not creating new user data
   if (!userSnapshot.exists()) {
     const { displayName, email } = userAuth;
     const createdAt = new Date();
@@ -55,6 +64,7 @@ export const createUserDocumentFromAuth = async (userAuth) => {
         displayName,
         email,
         createdAt,
+        ...additionalInformation,
       });
     } catch (error) {
       console.log("error creating the user", error.message);
@@ -62,4 +72,13 @@ export const createUserDocumentFromAuth = async (userAuth) => {
     // if user exists return the data
     return userDocRef;
   }
+};
+
+// Native Authentication (sign up using email & password)
+export const createAuthUserWithEmailAndPassword = async (email, password) => {
+  // if either of email and password if empty then return
+  if (!email || !password) return;
+
+  // if not then pass those
+  return createUserWithEmailAndPassword(auth, email, password);
 };
