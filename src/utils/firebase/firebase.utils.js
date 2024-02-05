@@ -6,6 +6,7 @@ import {
   signInWithPopup,
   GoogleAuthProvider,
   createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
 } from "firebase/auth";
 
 // Database methods
@@ -74,11 +75,20 @@ export const createUserDocumentFromAuth = async (
   }
 };
 
-// Native Authentication (sign up using email & password)
+// Sign Up : Native Authentication (email & password)
 export const createAuthUserWithEmailAndPassword = async (email, password) => {
   // if either of email and password if empty then return
   if (!email || !password) return;
 
   // if not then pass those
   return createUserWithEmailAndPassword(auth, email, password);
+};
+
+// Sign In : Native Authentication (email & password)
+export const signInAuthUserWithEmailAndPassword = async (email, password) => {
+  // if either of email and password if empty then return
+  if (!email || !password) return;
+
+  // if not then pass those
+  return signInWithEmailAndPassword(auth, email, password);
 };
