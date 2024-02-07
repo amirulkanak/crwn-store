@@ -8,6 +8,7 @@ import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   signOut,
+  onAuthStateChanged,
 } from "firebase/auth";
 
 // Database methods
@@ -96,3 +97,7 @@ export const signInAuthUserWithEmailAndPassword = async (email, password) => {
 
 // Sign Out
 export const signOutUser = async () => await signOut(auth);
+
+// Auth state change Listener
+export const onAuthStateChangedListener = (callback) =>
+  onAuthStateChanged(auth, callback);
